@@ -1,0 +1,174 @@
+package com.huo.tank;
+
+import com.huo.tank.mgr.PropertyMgr;
+import com.huo.tank.model.Dir;
+import com.huo.tank.model.Explode;
+import com.huo.tank.model.Tank;
+
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+
+/**
+ * 游戏的窗口
+ *
+ * @author huo
+ * @date 2019-5-26 14:11:08
+ */
+public class Window extends Frame {
+    public static final int GAME_WIDTH = 1280;
+    public static final int GAME_HEIGHT = 720;
+    private static Tank tank;
+    private static Random random = new Random();
+    private static ArrayList<Tank> enemies;
+    private static ArrayList<Explode> explodes = new ArrayList<>();
+
+    private int initEnemies = Integer.parseInt(PropertyMgr.get("enemies"));
+
+    @Override
+    public void paint(Graphics g) {
+        // 遍历爆炸
+        Iterator<Explode> iterExplode = explodes.iterator();
+        while (iterExplode.hasNext()) {
+            Explode next = iterExplode.next();
+            if (!next.isLiving()) {
+                iterExplode.remove();
+            } else {
+                next.paint(g);
+            }
+        }
+
+        // 左上角显示内存信息
+        g.setColor(Color.WHITE);
+        g.drawString("子弹的数量" + tank.getBullets().size(), 10, 40);
+        g.drawString("敌人坦克的数量" + enemies.size(), 10, 60);
+        g.drawString("爆炸的数量" + explodes.size(), 10, 80);
+
+        // 遍历画出敌人坦克
+        for (Iterator<Tank> itr = enemies.iterator(); itr.hasNext(); ) {
+            Tank tank = itr.next();
+            if (!tank.isLiving()) {
+                itr.remove();
+            }
+            tank.paint(g);
+            if (random.nextInt(100) > 90) {
+                Dir[] values = Dir.values();
+                tank.settDir(values[random.nextInt(4)]);
+                tank.setMoving(true);
+                tank.move();
+                tank.fire();
+            }
+            tank.setMoving(false);
+        }
+
+        // 主站坦克是不是还活着
+        if (!tank.isLiving()) {
+            System.err.println("游戏结束");
+            System.exit(-1);
+        }
+        tank.paint(g);
+    }
+
+    Window() {
+        enemies = new ArrayList<>();
+        for (int i = 0; i < initEnemies; i++) {
+            enemies.add(new Tank(200 + i * 100, 200, false, 10));
+        }
+        tank = new Tank(50, 50, true, 10);
+        setTitle("重学Java");
+        setSize(GAME_WIDTH, GAME_HEIGHT);
+        setResizable(false);
+        setVisible(true);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_CONTROL:
+                        System.out.println("fire!");
+                        tank.fire();
+                        break;
+                    case KeyEvent.VK_UP:
+                        tank.setMoving(true);
+                        tank.settDir(Dir.UP);
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        tank.setMoving(true);
+                        tank.settDir(Dir.DOWN);
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        tank.setMoving(true);
+                        tank.settDir(Dir.LEFT);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        tank.setMoving(true);
+                        tank.settDir(Dir.RIGHT);
+                        break;
+                    default:
+                        break;
+                }
+//                tank.move();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        tank.setMoving(false);
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        tank.setMoving(false);
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        tank.setMoving(false);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        tank.setMoving(false);
+                        break;
+                    default:
+                        break;
+                }
+//                tank.move();
+            }
+        });
+    }
+
+    private Image offScreenImage = null;
+
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
+    public static ArrayList<Tank> getEnemies() {
+        return enemies;
+    }
+
+    public static ArrayList<Explode> getExplodes() {
+        return explodes;
+    }
+
+    public static Tank getTank() {
+        return tank;
+    }
+}
