@@ -8,7 +8,7 @@ import java.util.Properties;
  * @date 2019/5/26-19:33
  */
 public class PropertyMgr {
-    static Properties prop = new Properties();
+    private static Properties prop = new Properties();
 
     static{
         try {

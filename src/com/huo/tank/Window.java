@@ -24,11 +24,9 @@ public class Window extends Frame {
     public static final int GAME_WIDTH = 1280;
     public static final int GAME_HEIGHT = 720;
     private static Tank tank;
-    private static Random random = new Random();
+    private static final Random RANDOM = new Random();
     private static ArrayList<Tank> enemies;
     private static ArrayList<Explode> explodes = new ArrayList<>();
-
-    private int initEnemies = Integer.parseInt(PropertyMgr.get("enemies"));
 
     @Override
     public void paint(Graphics g) {
@@ -56,9 +54,9 @@ public class Window extends Frame {
                 itr.remove();
             }
             tank.paint(g);
-            if (random.nextInt(100) > 90) {
+            if (RANDOM.nextInt(100) > 90) {
                 Dir[] values = Dir.values();
-                tank.settDir(values[random.nextInt(4)]);
+                tank.settDir(values[RANDOM.nextInt(4)]);
                 tank.setMoving(true);
                 tank.move();
                 tank.fire();
@@ -75,6 +73,9 @@ public class Window extends Frame {
     }
 
     Window() {
+        // 从配置文件拿敌人的数量
+        int initEnemies = Integer.parseInt(PropertyMgr.get("enemies"));
+
         enemies = new ArrayList<>();
         for (int i = 0; i < initEnemies; i++) {
             enemies.add(new Tank(200 + i * 100, 200, false, 10));
@@ -124,23 +125,10 @@ public class Window extends Frame {
                     default:
                         break;
                 }
-                if(dU){
-                    tank.setMoving(true);
-                    tank.settDir(Dir.UP);
-                }
-                if(dL){
-                    tank.setMoving(true);
-                    tank.settDir(Dir.LEFT);
-                }
-                if(dR){
-                    tank.setMoving(true);
-                    tank.settDir(Dir.RIGHT);
-                }
-                if(dD){
-                    tank.setMoving(true);
-                    tank.settDir(Dir.DOWN);
-                }
+                tank.setMoving(true);
+                setMyTankDir();
             }
+
 
             @Override
             public void keyReleased(KeyEvent e) {
@@ -160,9 +148,31 @@ public class Window extends Frame {
                     default:
                         break;
                 }
-                if(!dR && !dU && !dL && !dD){
+                setMyTankDir();
+            }
+
+            private void setMyTankDir() {
+                if (!dR && !dL && !dU && !dD) {
                     tank.setMoving(false);
+                } else {
+                    tank.setMoving(true);
+                    if (dD) {
+                        tank.settDir(Dir.DOWN);
+                        return;
+                    }
+                    if (dU) {
+                        tank.settDir(Dir.UP);
+                        return;
+                    }
+                    if (dL) {
+                        tank.settDir(Dir.LEFT);
+                        return;
+                    }
+                    if (dR) {
+                        tank.settDir(Dir.RIGHT);
+                    }
                 }
+
             }
         });
     }

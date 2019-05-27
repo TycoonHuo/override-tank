@@ -83,8 +83,8 @@ public class Bullet extends BaseObject {
             tank.die();
         }
 
-        // 开启队友伤害
-//        if (r1.intersects(r2)) {
+//         开启队友伤害
+//        if (bulletRect.intersects(tank.getTankRect())) {
 //            // 在爆炸处new出一个爆炸
 //            Window.getExplodes().add(new Explode(positX - ResourceMgr.explodes[0].getWidth() / 2,
 //                    positY - ResourceMgr.explodes[0].getHeight() / 2));
