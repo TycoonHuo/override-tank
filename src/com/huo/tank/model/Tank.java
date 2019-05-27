@@ -34,7 +34,7 @@ public class Tank extends BaseObject {
      * @param positY 纵坐标位置
      * @param good   好坦克还是坏的
      */
-    public Tank(int positX, int positY, boolean good, int speed,Window window) {
+    public Tank(int positX, int positY, boolean good, int speed, Window window) {
         this.positX = positX;
         this.positY = positY;
         this.good = good;
@@ -109,13 +109,15 @@ public class Tank extends BaseObject {
 
         if (living) {
             g.drawImage(tankImg, positX, positY, null);
+        } else {
+            return;
         }
 
         move();
     }
 
     public void fire() {
-        window.getBullets().add(new Bullet(positX + tankImg.getWidth() / 2, positY + tankImg.getWidth() / 2, tDir, good,this.window));
+        window.getBullets().add(new Bullet(positX + tankImg.getWidth() / 2, positY + tankImg.getWidth() / 2, tDir, good, this.window));
     }
 
     private void boundCheck() {

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -14,8 +15,9 @@ import java.io.IOException;
 public class ImageTest {
     @Test
     void test() throws IOException {
-        BufferedImage read = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/坦克/我方坦克/1Player/1/m1-1-1.png"));
-        BufferedImage read1 = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/坦克/敌方坦克/1Player/1/m1-1-1.png"));
-        System.out.println(read1);
+//        BufferedImage read = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/坦克/我方坦克/1Player/1/m1-1-1.png"));
+//        BufferedImage read1 = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/坦克/敌方坦克/1Player/1/m1-1-1.png"));
+        BufferedImage read = ImageIO.read(new File("img/坦克/我方坦克/1Player/1/m1-1-1.png"));
+        System.out.println(read);
     }
 }

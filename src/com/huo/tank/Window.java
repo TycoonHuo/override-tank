@@ -56,7 +56,7 @@ public class Window extends Frame {
                 itr.remove();
             }
             tank.paint(g);
-            if (RANDOM.nextInt(100) > 90) {
+            if (RANDOM.nextInt(100) > 10) {
                 Dir[] values = Dir.values();
                 tank.settDir(values[RANDOM.nextInt(4)]);
                 tank.setMoving(true);
@@ -67,7 +67,7 @@ public class Window extends Frame {
         }
 
         // 遍历子弹画出来
-        for(int i = 0; i < bullets.size(); i++){
+        for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
 
@@ -85,9 +85,9 @@ public class Window extends Frame {
 
         enemies = new ArrayList<>();
         for (int i = 0; i < initEnemies; i++) {
-            enemies.add(new Tank(200 + i * 100, 200, false, 10,this));
+            enemies.add(new Tank(200 + i * 100, 200, false, 10, this));
         }
-        tank = new Tank(50, 50, true, 10,this);
+        tank = new Tank(50, 50, true, 10, this);
         setTitle("重学Java");
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
@@ -113,10 +113,6 @@ public class Window extends Frame {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
-                    case KeyEvent.VK_CONTROL:
-                        System.out.println("fire!");
-                        tank.fire();
-                        break;
                     case KeyEvent.VK_UP:
                         dU = true;
                         break;
@@ -140,6 +136,10 @@ public class Window extends Frame {
             @Override
             public void keyReleased(KeyEvent e) {
                 switch (e.getKeyCode()) {
+                    case KeyEvent.VK_CONTROL:
+                        System.out.println("fire!");
+                        tank.fire();
+                        break;
                     case KeyEvent.VK_UP:
                         dU = false;
                         break;
@@ -206,10 +206,6 @@ public class Window extends Frame {
 
     public static ArrayList<Explode> getExplodes() {
         return explodes;
-    }
-
-    public static Tank getTank() {
-        return tank;
     }
 
     public ArrayList<Bullet> getBullets() {

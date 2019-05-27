@@ -13,18 +13,20 @@ import java.awt.*;
 public class Bullet extends BaseObject {
     private boolean living = true;
     private Dir dir;
-    private final int SPEED = 50;
+    private int speed;
     private boolean good;
     private Rectangle bulletRect = new Rectangle();
     private Window window;
 
 
-    Bullet(int positX, int positY, Dir dir, boolean good,Window window) {
+    Bullet(int positX, int positY, Dir dir, boolean good, Window window) {
         this.positX = positX;
         this.positY = positY;
         this.dir = dir;
         this.good = good;
         this.window = window;
+        // 可以从配置文件拿
+        this.speed = 20;
     }
 
     private void move() {
@@ -35,16 +37,16 @@ public class Bullet extends BaseObject {
         }
         switch (dir) {
             case DOWN:
-                positY += SPEED;
+                positY += speed;
                 break;
             case UP:
-                positY -= SPEED;
+                positY -= speed;
                 break;
             case LEFT:
-                positX -= SPEED;
+                positX -= speed;
                 break;
             case RIGHT:
-                positX += SPEED;
+                positX += speed;
                 break;
             default:
                 break;
@@ -63,7 +65,7 @@ public class Bullet extends BaseObject {
 
     @Override
     public void paint(Graphics g) {
-        if(!living){
+        if (!living) {
             window.getBullets().remove(this);
         }
         g.setColor(Color.magenta);
@@ -71,17 +73,17 @@ public class Bullet extends BaseObject {
         move();
     }
 
-    boolean isLiving() {
-        return living;
-    }
 
     /**
      * 碰撞检测，和谁碰撞需要传进来
      * 这里每次都new对象，有优化空间
      */
     private void collideWith(Tank tank) {
+        if (tank.isGood() == this.good) {
+            return;
+        }
         // 不开启队友伤害
-        if (bulletRect.intersects(tank.getTankRect()) && this.good != tank.isGood()) {
+        if (bulletRect.intersects(tank.getTankRect())) {
             // 在爆炸处new出一个爆炸
             Window.getExplodes().add(new Explode(positX - ResourceMgr.explodes[0].getWidth() / 2,
                     positY - ResourceMgr.explodes[0].getHeight() / 2));
