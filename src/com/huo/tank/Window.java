@@ -92,6 +92,16 @@ public class Window extends Frame {
         });
 
         addKeyListener(new KeyAdapter() {
+            /**
+             * 每次只能进一个循环，然后就break了 需要在这里记录按键的状态
+             * 按键松开 需要将按键状态恢复
+             * 这四个属性来记录按键的状态，坦克根据这里的状态来判断方向。
+             */
+            boolean dU;
+            boolean dD;
+            boolean dL;
+            boolean dR;
+
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
@@ -100,46 +110,41 @@ public class Window extends Frame {
                         tank.fire();
                         break;
                     case KeyEvent.VK_UP:
-                        tank.setMoving(true);
-                        tank.settDir(Dir.UP);
+                        dU = true;
                         break;
                     case KeyEvent.VK_DOWN:
-                        tank.setMoving(true);
-                        tank.settDir(Dir.DOWN);
+                        dD = true;
                         break;
                     case KeyEvent.VK_LEFT:
-                        tank.setMoving(true);
-                        tank.settDir(Dir.LEFT);
+                        dL = true;
                         break;
                     case KeyEvent.VK_RIGHT:
-                        tank.setMoving(true);
-                        tank.settDir(Dir.RIGHT);
+                        dR = true;
                         break;
                     default:
                         break;
                 }
-//                tank.move();
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
+
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
-                        tank.setMoving(false);
+                        dU = false;
                         break;
                     case KeyEvent.VK_DOWN:
-                        tank.setMoving(false);
+                        dU = false;
                         break;
                     case KeyEvent.VK_LEFT:
-                        tank.setMoving(false);
+                        dL = false;
                         break;
                     case KeyEvent.VK_RIGHT:
-                        tank.setMoving(false);
+                        dR = false;
                         break;
                     default:
                         break;
                 }
-//                tank.move();
             }
         });
     }
