@@ -45,7 +45,7 @@ public class Window extends Frame {
 
         // 左上角显示内存信息
         g.setColor(Color.WHITE);
-        g.drawString("子弹的数量" + tank.getBullets().size(), 10, 40);
+        g.drawString("子弹的数量" + this.bullets.size(), 10, 40);
         g.drawString("敌人坦克的数量" + enemies.size(), 10, 60);
         g.drawString("爆炸的数量" + explodes.size(), 10, 80);
 
@@ -66,6 +66,11 @@ public class Window extends Frame {
             tank.setMoving(false);
         }
 
+        // 遍历子弹画出来
+        for(int i = 0; i < bullets.size(); i++){
+            bullets.get(i).paint(g);
+        }
+
         // 主站坦克是不是还活着
         if (!tank.isLiving()) {
             System.err.println("游戏结束");
@@ -80,9 +85,9 @@ public class Window extends Frame {
 
         enemies = new ArrayList<>();
         for (int i = 0; i < initEnemies; i++) {
-            enemies.add(new Tank(200 + i * 100, 200, false, 10));
+            enemies.add(new Tank(200 + i * 100, 200, false, 10,this));
         }
-        tank = new Tank(50, 50, true, 10);
+        tank = new Tank(50, 50, true, 10,this);
         setTitle("重学Java");
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
@@ -205,5 +210,9 @@ public class Window extends Frame {
 
     public static Tank getTank() {
         return tank;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
     }
 }

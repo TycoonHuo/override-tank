@@ -13,35 +13,38 @@ import java.awt.*;
 public class Bullet extends BaseObject {
     private boolean living = true;
     private Dir dir;
-    private int speed = 50;
+    private final int SPEED = 50;
     private boolean good;
     private Rectangle bulletRect = new Rectangle();
+    private Window window;
 
 
-    Bullet(int positX, int positY, Dir dir, boolean good) {
+    Bullet(int positX, int positY, Dir dir, boolean good,Window window) {
         this.positX = positX;
         this.positY = positY;
         this.dir = dir;
         this.good = good;
+        this.window = window;
     }
 
     private void move() {
+        // 子弹飞出屏幕了
         if (positY < 0 || positX < 0 || positY > Window.GAME_HEIGHT || positX > Window.GAME_WIDTH) {
             living = false;
             return;
         }
         switch (dir) {
             case DOWN:
-                positY += speed;
+                positY += SPEED;
                 break;
             case UP:
-                positY -= speed;
+                positY -= SPEED;
                 break;
             case LEFT:
-                positX -= speed;
+                positX -= SPEED;
                 break;
             case RIGHT:
-                positX += speed;
+                positX += SPEED;
                 break;
             default:
                 break;
@@ -60,6 +63,9 @@ public class Bullet extends BaseObject {
 
     @Override
     public void paint(Graphics g) {
+        if(!living){
+            window.getBullets().remove(this);
+        }
         g.setColor(Color.magenta);
         g.fillOval(positX, positY, 5, 5);
         move();

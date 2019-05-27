@@ -26,21 +26,22 @@ public class Tank extends BaseObject {
     private BufferedImage tankImg;
     private boolean moving;
     private boolean living = true;
-    private ArrayList<Bullet> bullets = new ArrayList<>();
     private Rectangle tankRect = new Rectangle();
+    private Window window;
 
     /**
      * @param positX 横坐标位置
      * @param positY 纵坐标位置
      * @param good   好坦克还是坏的
      */
-    public Tank(int positX, int positY, boolean good, int speed) {
+    public Tank(int positX, int positY, boolean good, int speed,Window window) {
         this.positX = positX;
         this.positY = positY;
         this.good = good;
         tankImg = good ? ResourceMgr.goodTank1U : ResourceMgr.badTank1D;
         tDir = good ? Dir.UP : Dir.DOWN;
         this.speed = speed;
+        this.window = window;
     }
 
     public void settDir(Dir tDir) {
@@ -110,20 +111,11 @@ public class Tank extends BaseObject {
             g.drawImage(tankImg, positX, positY, null);
         }
 
-        Iterator<Bullet> iterator = bullets.iterator();
-        while (iterator.hasNext()) {
-            Bullet bullet = iterator.next();
-            if (bullet.isLiving()) {
-                bullet.paint(g);
-            } else {
-                iterator.remove();
-            }
-        }
         move();
     }
 
     public void fire() {
-        bullets.add(new Bullet(positX + tankImg.getWidth() / 2, positY + tankImg.getWidth() / 2, tDir, good));
+        window.getBullets().add(new Bullet(positX + tankImg.getWidth() / 2, positY + tankImg.getWidth() / 2, tDir, good,this.window));
     }
 
     private void boundCheck() {
@@ -148,9 +140,6 @@ public class Tank extends BaseObject {
         this.moving = moving;
     }
 
-    public ArrayList<Bullet> getBullets() {
-        return bullets;
-    }
 
     public boolean isLiving() {
         return living;
