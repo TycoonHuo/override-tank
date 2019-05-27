@@ -1,6 +1,7 @@
 package com.huo.tank;
 
 import com.huo.tank.mgr.PropertyMgr;
+import com.huo.tank.model.Bullet;
 import com.huo.tank.model.Dir;
 import com.huo.tank.model.Explode;
 import com.huo.tank.model.Tank;
@@ -27,6 +28,7 @@ public class Window extends Frame {
     private static final Random RANDOM = new Random();
     private static ArrayList<Tank> enemies;
     private static ArrayList<Explode> explodes = new ArrayList<>();
+    private ArrayList<Bullet> bullets = new ArrayList<>();
 
     @Override
     public void paint(Graphics g) {
