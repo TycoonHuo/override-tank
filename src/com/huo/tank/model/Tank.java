@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class Tank extends BaseObject {
     /**
-     * 默认坦克朝右
+     * 默认坦克朝右(图片)
      */
     private boolean good;
     private int speed;

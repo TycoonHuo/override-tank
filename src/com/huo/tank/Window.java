@@ -124,17 +124,32 @@ public class Window extends Frame {
                     default:
                         break;
                 }
+                if(dU){
+                    tank.setMoving(true);
+                    tank.settDir(Dir.UP);
+                }
+                if(dL){
+                    tank.setMoving(true);
+                    tank.settDir(Dir.LEFT);
+                }
+                if(dR){
+                    tank.setMoving(true);
+                    tank.settDir(Dir.RIGHT);
+                }
+                if(dD){
+                    tank.setMoving(true);
+                    tank.settDir(Dir.DOWN);
+                }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
                         dU = false;
                         break;
                     case KeyEvent.VK_DOWN:
-                        dU = false;
+                        dD = false;
                         break;
                     case KeyEvent.VK_LEFT:
                         dL = false;
@@ -144,6 +159,9 @@ public class Window extends Frame {
                         break;
                     default:
                         break;
+                }
+                if(!dR && !dU && !dL && !dD){
+                    tank.setMoving(false);
                 }
             }
         });
