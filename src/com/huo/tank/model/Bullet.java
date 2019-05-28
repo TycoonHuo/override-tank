@@ -65,9 +65,6 @@ public class Bullet extends BaseObject {
 
     @Override
     public void paint(Graphics g) {
-        if (!living) {
-            window.getBullets().remove(this);
-        }
         g.setColor(Color.magenta);
         g.fillOval(positX, positY, 5, 5);
         move();
@@ -103,5 +100,9 @@ public class Bullet extends BaseObject {
 
     private void die() {
         living = false;
+    }
+
+    public boolean isLiving() {
+        return living;
     }
 }

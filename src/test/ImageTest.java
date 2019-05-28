@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author huoyun
  * @date 2019/5/26-15:22
  */
-public class ImageTest {
+class ImageTest {
     @Test
     void test() throws IOException {
 //        BufferedImage read = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/坦克/我方坦克/1Player/1/m1-1-1.png"));
@@ -20,4 +20,5 @@ public class ImageTest {
         BufferedImage read = ImageIO.read(new File("img/坦克/我方坦克/1Player/1/m1-1-1.png"));
         System.out.println(read);
     }
+
 }

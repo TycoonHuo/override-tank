@@ -32,44 +32,42 @@ public class Window extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        // 遍历爆炸
-        Iterator<Explode> iterExplode = explodes.iterator();
-        while (iterExplode.hasNext()) {
-            Explode next = iterExplode.next();
-            if (!next.isLiving()) {
-                iterExplode.remove();
-            } else {
-                next.paint(g);
-            }
-        }
-
         // 左上角显示内存信息
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量" + this.bullets.size(), 10, 40);
         g.drawString("敌人坦克的数量" + enemies.size(), 10, 60);
         g.drawString("爆炸的数量" + explodes.size(), 10, 80);
 
+        // 遍历爆炸
+        for(Iterator<Explode> itr = explodes.iterator();itr.hasNext();){
+            Explode next = itr.next();
+            if(!next.isLiving()){
+                itr.remove();
+                continue;
+            }
+            next.paint(g);
+        }
+
         // 遍历画出敌人坦克
         for (Iterator<Tank> itr = enemies.iterator(); itr.hasNext(); ) {
             Tank tank = itr.next();
             if (!tank.isLiving()) {
                 itr.remove();
+                continue;
             }
             tank.paint(g);
-            if (RANDOM.nextInt(100) > 10) {
-                Dir[] values = Dir.values();
-                tank.settDir(values[RANDOM.nextInt(4)]);
-                tank.setMoving(true);
-                tank.move();
-                tank.fire();
-            }
-            tank.setMoving(false);
         }
 
-        // 遍历子弹画出来
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paint(g);
+        // 遍历子弹 子弹死了 这里就删除了
+        for(Iterator<Bullet> itr = bullets.iterator();itr.hasNext();){
+            Bullet next = itr.next();
+            if(!next.isLiving()){
+                itr.remove();
+                continue;
+            }
+            next.paint(g);
         }
+
 
         // 主站坦克是不是还活着
         if (!tank.isLiving()) {

@@ -5,8 +5,6 @@ import com.huo.tank.mgr.ResourceMgr;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -16,6 +14,7 @@ import java.util.Random;
  * @date 2019/5/26-14:23
  */
 public class Tank extends BaseObject {
+    private static final Random RANDOM = new Random();
     /**
      * 默认坦克朝右(图片)
      */
@@ -112,8 +111,30 @@ public class Tank extends BaseObject {
         } else {
             return;
         }
-
+        // 敌人做一些操作
+        enemyDo();
         move();
+    }
+
+    /**
+     * 如果不是good 那么 对敌人的操作进行一些设计
+     */
+    private void enemyDo() {
+        if (!good) {
+            moving = false;
+            // 20%概率改变方向
+            if (RANDOM.nextInt(10) > 7) {
+                Dir[] values = Dir.values();
+                settDir(values[RANDOM.nextInt(4)]);
+            }
+            if (RANDOM.nextInt(100) > 10) {
+                moving = true;
+            }
+            if (RANDOM.nextInt(10) > 5) {
+
+                fire();
+            }
+        }
     }
 
     public void fire() {

@@ -24,6 +24,7 @@ public class Explode extends BaseObject {
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], positX, positY, null);
         if (step == ResourceMgr.explodes.length) {
+            // 爆炸结束
             living = false;
         }
     }
