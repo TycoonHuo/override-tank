@@ -27,6 +27,12 @@ public class Bullet extends BaseObject {
         this.window = window;
         // 可以从配置文件拿
         this.speed = 20;
+
+        if (good) {
+            bulletRect.height = bulletRect.width = 50;
+        } else {
+            bulletRect.height = bulletRect.width = 5;
+        }
     }
 
     private void move() {
@@ -53,7 +59,6 @@ public class Bullet extends BaseObject {
         }
         bulletRect.x = positX;
         bulletRect.y = positY;
-        bulletRect.height = bulletRect.width = 5;
 
         // 敌人打我
 //        collideWith(Window.getTank());
@@ -65,8 +70,13 @@ public class Bullet extends BaseObject {
 
     @Override
     public void paint(Graphics g) {
-        g.setColor(Color.magenta);
-        g.fillOval(positX, positY, 5, 5);
+        if (good) {
+            g.setColor(Color.GREEN);
+            g.fillOval(positX, positY, 50, 50);
+        } else {
+            g.setColor(Color.magenta);
+            g.fillOval(positX, positY, 5, 5);
+        }
         move();
     }
 

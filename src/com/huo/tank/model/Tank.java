@@ -47,7 +47,7 @@ public class Tank extends BaseObject {
         this.tDir = tDir;
     }
 
-    public void move() {
+    private void move() {
         if (!moving) {
             return;
         }

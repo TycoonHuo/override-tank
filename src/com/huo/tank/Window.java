@@ -13,7 +13,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 /**
  * 游戏的窗口
@@ -25,7 +24,6 @@ public class Window extends Frame {
     public static final int GAME_WIDTH = 1280;
     public static final int GAME_HEIGHT = 720;
     private static Tank tank;
-    private static final Random RANDOM = new Random();
     private static ArrayList<Tank> enemies;
     private static ArrayList<Explode> explodes = new ArrayList<>();
     private ArrayList<Bullet> bullets = new ArrayList<>();
