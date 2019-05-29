@@ -1,6 +1,7 @@
 package com.huo.tank.model;
 
 import com.huo.tank.Window;
+import com.huo.tank.mgr.PropertyMgr;
 import com.huo.tank.mgr.ResourceMgr;
 
 import java.awt.*;
@@ -33,13 +34,13 @@ public class Tank extends BaseObject {
      * @param positY 纵坐标位置
      * @param good   好坦克还是坏的
      */
-    public Tank(int positX, int positY, boolean good, int speed, Window window) {
+    public Tank(int positX, int positY, boolean good, Window window) {
         this.positX = positX;
         this.positY = positY;
         this.good = good;
         tankImg = good ? ResourceMgr.goodTank1U : ResourceMgr.badTank1D;
         tDir = good ? Dir.UP : Dir.DOWN;
-        this.speed = speed;
+        speed = good ? Integer.parseInt(PropertyMgr.get("tankSpeed")) : Integer.parseInt(PropertyMgr.get("enemySpeed"));
         this.window = window;
         tankRect.width = tankImg.getWidth();
         tankRect.height = tankImg.getHeight();

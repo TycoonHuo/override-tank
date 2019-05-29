@@ -37,9 +37,9 @@ public class Window extends Frame {
         g.drawString("爆炸的数量" + explodes.size(), 10, 80);
 
         // 遍历爆炸
-        for(Iterator<Explode> itr = explodes.iterator();itr.hasNext();){
+        for (Iterator<Explode> itr = explodes.iterator(); itr.hasNext(); ) {
             Explode next = itr.next();
-            if(!next.isLiving()){
+            if (!next.isLiving()) {
                 itr.remove();
                 continue;
             }
@@ -57,9 +57,9 @@ public class Window extends Frame {
         }
 
         // 遍历子弹 子弹死了 这里就删除了
-        for(Iterator<Bullet> itr = bullets.iterator();itr.hasNext();){
+        for (Iterator<Bullet> itr = bullets.iterator(); itr.hasNext(); ) {
             Bullet next = itr.next();
-            if(!next.isLiving()){
+            if (!next.isLiving()) {
                 itr.remove();
                 continue;
             }
@@ -74,7 +74,7 @@ public class Window extends Frame {
         }
         tank.paint(g);
 
-        if(enemies.size()==0){
+        if (enemies.size() == 0) {
             System.err.println("你赢了");
             System.exit(0);
         }
@@ -82,13 +82,13 @@ public class Window extends Frame {
 
     Window() {
         // 从配置文件拿敌人的数量
-        int initEnemies = Integer.parseInt(PropertyMgr.get("enemies"));
+        int initEnemies =  Integer.parseInt(PropertyMgr.get("enemies"));
 
         enemies = new ArrayList<>();
         for (int i = 0; i < initEnemies; i++) {
-            enemies.add(new Tank(200 + i * 100, 200, false, 10, this));
+            enemies.add(new Tank(200 + i * 100, 200, false,  this));
         }
-        tank = new Tank(50, 50, true, 10, this);
+        tank = new Tank(50, 50, true, this);
         setTitle("重学Java");
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
@@ -115,7 +115,7 @@ public class Window extends Frame {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_S:
-                        
+                        break;
                     case KeyEvent.VK_UP:
                         dU = true;
                         break;

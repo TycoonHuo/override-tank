@@ -24,6 +24,6 @@ public class PropertyMgr {
     private PropertyMgr(){}
 
     public static String get(String str){
-        return (String) prop.get(str);
+        return prop.getProperty(str);
     }
 }

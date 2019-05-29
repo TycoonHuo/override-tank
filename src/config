@@ -1,6 +1,6 @@
 # 坦克的配置文件
 enemies=15
-#tankSpeed
-#enemySpeed
+tankSpeed=10
+enemySpeed=5
 #windowHeight
 #windowWidth
