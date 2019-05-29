@@ -18,12 +18,12 @@ public class PropertyMgr {
         }
     }
 
+    /**
+     * 读配置文件的，禁止用户来new
+     */
+    private PropertyMgr(){}
+
     public static String get(String str){
         return (String) prop.get(str);
-    }
-
-    public static void main(String[] args){
-        String enemies = PropertyMgr.get("enemies");
-        System.out.println(enemies);
     }
 }

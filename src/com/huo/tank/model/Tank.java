@@ -41,6 +41,8 @@ public class Tank extends BaseObject {
         tDir = good ? Dir.UP : Dir.DOWN;
         this.speed = speed;
         this.window = window;
+        tankRect.width = tankImg.getWidth();
+        tankRect.height = tankImg.getHeight();
     }
 
     public void settDir(Dir tDir) {
@@ -94,18 +96,14 @@ public class Tank extends BaseObject {
                     break;
             }
         }
-
+        // 防止坦克出界
+        boundCheck();
         tankRect.x = positX;
         tankRect.y = positY;
-        tankRect.width = tankImg.getWidth();
-        tankRect.height = tankImg.getHeight();
     }
 
     @Override
     public void paint(Graphics g) {
-        // 防止坦克出界
-        boundCheck();
-
         if (living) {
             g.drawImage(tankImg, positX, positY, null);
         } else {

@@ -73,6 +73,11 @@ public class Window extends Frame {
             System.exit(-1);
         }
         tank.paint(g);
+
+        if(enemies.size()==0){
+            System.err.println("你赢了");
+            System.exit(0);
+        }
     }
 
     Window() {
@@ -109,6 +114,8 @@ public class Window extends Frame {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
+                    case KeyEvent.VK_S:
+                        
                     case KeyEvent.VK_UP:
                         dU = true;
                         break;

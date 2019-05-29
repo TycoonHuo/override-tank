@@ -16,7 +16,6 @@ public class Bullet extends BaseObject {
     private int speed;
     private boolean good;
     private Rectangle bulletRect = new Rectangle();
-    private Window window;
 
 
     Bullet(int positX, int positY, Dir dir, boolean good, Window window) {
@@ -24,7 +23,6 @@ public class Bullet extends BaseObject {
         this.positY = positY;
         this.dir = dir;
         this.good = good;
-        this.window = window;
         // 可以从配置文件拿
         this.speed = 20;
 
@@ -97,15 +95,6 @@ public class Bullet extends BaseObject {
             this.die();
             tank.die();
         }
-
-//         开启队友伤害
-//        if (bulletRect.intersects(tank.getTankRect())) {
-//            // 在爆炸处new出一个爆炸
-//            Window.getExplodes().add(new Explode(positX - ResourceMgr.explodes[0].getWidth() / 2,
-//                    positY - ResourceMgr.explodes[0].getHeight() / 2));
-//            this.die();
-//            tank.die();
-//        }
     }
 
     private void die() {

@@ -56,6 +56,9 @@ public class ResourceMgr {
         }
     }
 
+    private ResourceMgr() {
+    }
+
     private static BufferedImage loadImg(String path) {
         BufferedImage image = null;
         try {
